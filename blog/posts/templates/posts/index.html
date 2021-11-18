@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>KodeCamp Blog</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    {% block navbar %}
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+            <a class="navbar-brand" href="{% url 'index' %}">KodeCamp</a>
+        </nav>
+    {% endblock %}
+    {% block content%}
+        <div class="container">
+            {% if posts %}
+                    <h1 class="mt-1" style="text-align: center;">KodeCamp Blog Articles</h1>
+                    {% for post in posts %}
+                        <div class="card col-4 my-3" style="float: left; height: 340px;">
+                            <img class="card-img-top" src="{{ post.image.url }}" alt="Card image" style="width:auto; height:200px">
+                            <div class="card-body">
+                            <h4 class="card-title" style="font-size: 17px;">{{ post.title }}</h4>
+                            <p class="card-text" style="text-align: justify; font-size: 13px;">{{ post.summary }}</p>
+                            <a href="{% url 'post' post.id %}" class="btn btn-info px-0 py-0">Read more...</a>
+                            <span style="font-size:12px; margin-left: 70px;"><strong>Category:</strong> {{ post.category }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+            {% else %}
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1>There are no posts in the database.</h1>      
+                            <p>Kindly create a post.</p>
+                        </div>
+                    </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+
+
