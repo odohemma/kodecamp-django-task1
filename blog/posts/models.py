@@ -6,7 +6,7 @@ class Post(models.Model):
     content = models.CharField(max_length=400)
     summary = models.CharField(max_length=150)
     category = models.CharField(max_length=400)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/%Y/%m/%d/')
     # created_date = models.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
     published_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
