@@ -1,5 +1,5 @@
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Post, Author
@@ -10,13 +10,16 @@ def index(request):
     })
 
 def post(request, post_id):
-    post = Post.objects.get(id=post_id)
-    authors = post.authors.all()
-    return render(request, "posts/post_detail.html", {
-        "post": post,
-        "authors": authors,
-        # "non_authors": Author.objects.exclude(posts=post).all(),
-    })
+    if 1 <= post_id <= 16:
+        post = Post.objects.get(id=post_id)
+        authors = post.authors.all()
+        return render(request, "posts/post_detail.html", {
+            "post": post,
+            "authors": authors,
+            # "non_authors": Author.objects.exclude(posts=post).all(),
+        })
+    else:
+        raise Http404 ("No such section.")
 
 """ def book(request, flight_id):
 
